@@ -1,0 +1,62 @@
+<!-- <mat-card class="p-5"> -->
+    <div class="header-container m-2">
+        <h1>Enquiry List</h1>
+        <button type="button" class="btn btn-success" (click)="startEnquiry()">New Enquiry</button>
+      </div>
+    
+      <div class="table-responsive" style="margin-top: 40px">
+        <table class="table  table-striped">
+          <thead class="table-light">
+            <tr>
+              <th>Client Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Location</th>
+              <th>Garment</th>
+              <th>Quantity</th>
+              <th>Sizes</th>
+              <th>Colors</th>
+              <th>Fabric</th>
+              <th>Prefered Placement</th>
+              <th>Shipping Address</th>
+              <th>Budget</th>
+              <th>Status</th>
+              <th>Enquiry Type</th>
+              <th>Submitted At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let element of dataSource">
+              <td>{{ element.clientName }}</td>
+              <td>{{ element.email }}</td>
+              <td>{{ element.phone }}</td>
+              <td>{{ element.location }}</td>
+              <td>{{ element.garmentType }}</td>
+              <td>{{ element.quantity }}</td>
+              <td>{{ element.sizes }}</td>
+              <td>{{ element.colors }}</td>
+              <td>{{ element.fabricType }}</td>
+              <td>{{ element.printLocations?.join(', ') }}</td>
+              <td>{{ element.shippingAddress }}</td>
+              <td>{{ element.estimatedBudget || '-' }}</td>
+              <td>
+                <span class="badge" 
+                      [ngClass]="{
+                        'bg-success': element.status === 'Qualified Lead',
+                        'bg-warning': element.status === 'Enquiry'
+                      }">
+                  {{ element.status }}
+                </span>
+              </td>
+              <td>{{ element.enquiryType }}</td>
+              <td>{{ element.submittedAt | date: 'short' }}</td>
+              <td>
+                <button type="button" class="btn btn-primary" (click)="viewDetails(element.id)" >View</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  <!-- </mat-card> -->
+  

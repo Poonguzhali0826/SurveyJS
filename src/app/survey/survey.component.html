@@ -1,0 +1,26 @@
+<!-- <div class="stepper-container mb-4">
+    <ul class="stepper d-flex list-unstyled justify-content-between">
+      <li *ngFor="let title of pageTitles; let i = index"
+          [class.active]="i === currentPageIndex"
+          [class.completed]="i < currentPageIndex"
+          (click)="goToStep(i)"
+          [class.disabled]="i > currentPageIndex">
+        <span class="step-number">{{ i + 1 }}</span>
+        <span class="step-title">{{ title }}</span>
+      </li>
+    </ul>
+  </div> -->
+<mat-horizontal-stepper [selectedIndex]="currentPageIndex" (selectionChange)="onStepChange($event)" linear>
+
+    <mat-step *ngFor="let title of pageTitles; let i = index"
+    [label]="title"
+    [completed]="i < currentPageIndex"
+    [editable]="false">
+</mat-step>
+</mat-horizontal-stepper>
+
+  
+  
+<survey [model]="surveyModel"></survey>
+
+

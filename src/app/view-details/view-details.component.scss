@@ -1,0 +1,25 @@
+.details-container {
+    padding: 16px;
+  }
+  
+  .section-card {
+    margin-bottom: 20px;
+    border-radius: 12px;
+    background: #fafafa;
+  }
+  
+  .inner-box {
+    padding: 16px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); // ⬅️ subtle full box shadow
+    margin-top: 10px;
+    border: 1px solid #e0e0e0;
+  }
+  
+
+  .back-button mat-icon {
+    vertical-align: middle;
+    font-size: 20px;
+    cursor: pointer;
+  }

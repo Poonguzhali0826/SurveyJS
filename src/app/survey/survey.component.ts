@@ -1,15 +1,40 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { SurveyComponent } from './survey/survey.component';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Model } from "survey-core";
+import { SurveyModule } from 'survey-angular-ui';
+import "survey-core/survey-core.css";
+import { HttpClient, HttpClientModule  } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 @Component({
-  selector: 'app-root',
+  selector: 'app-survey',
   standalone: true,
-  imports: [RouterOutlet, SurveyComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  imports: [
+    SurveyModule, 
+    CommonModule, 
+    HttpClientModule,
+    MatStepperModule,
+    MatIconModule,
+    MatButtonModule
+  ],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { displayDefaultIndicatorType: false }
+    }
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  templateUrl: './survey.component.html',
+  styleUrl: './survey.component.scss'
 })
-export class AppComponent {
-  title = 'Get Started with SurveyJS Form Library for Angular';
+export class SurveyComponent implements OnInit {
+  title = 'My First Survey';
+  stepIcons = ['phone', 'chat', 'done', 'event', 'business'];
   surveyJson = {
     "pages": [
     {
@@ -172,4 +197,61 @@ export class AppComponent {
     }
   ]
   };
+  surveyModel!: Model;
+  currentPageIndex = 0;
+  pageTitles: string[] = [];
+
+  constructor(
+    private http: HttpClient, 
+    private router: Router, 
+    private cdr: ChangeDetectorRef
+  ) {
+    // this.surveyModel.onCurrentPageChanged.add((sender) => {
+    //   this.currentPageIndex = sender.currentPageNo;
+    // });
+  }
+  alertResults (sender: Model) {
+    const results = sender.data;
+    console.log('survey results:', results);
+    const payload = {
+      ...results,
+      surveyCreatedUsing: "Form"
+    };
+    this.http.post('http://localhost:3000/api/survey', payload).subscribe({
+      next: (response) => {
+        console.log("Data sent to backend:", response);
+      },
+      error: (err) => {
+        console.error("Failed to send data:", err);
+      }
+    });
+    this.router.navigate(['/enquiries-list']);
+
+  }
+  ngOnInit() {
+    const survey = new Model(this.surveyJson);
+    this.surveyModel = survey;
+
+    this.pageTitles = this.surveyJson.pages.map((page: any) => page.title);
+    console.log('Page Titles:', this.pageTitles);
+    this.surveyModel.onCurrentPageChanged.add((sender) => {
+      this.currentPageIndex = sender.currentPageNo;
+      this.cdr.detectChanges();
+    });
+  
+    // Handle survey complete
+    this.surveyModel.onComplete.add((sender) => this.alertResults(sender));
+   
+    // this.surveyModel = survey;
+   
+  }
+  onStepChange(event: any) {
+    const newIndex = event.selectedIndex;
+  
+    // Allow going to current or previous steps only
+    if (newIndex <= this.currentPageIndex) {
+      this.surveyModel.currentPageNo = newIndex;
+      this.currentPageIndex = newIndex;
+    }
+  }
 }
