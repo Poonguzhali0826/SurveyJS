@@ -30,17 +30,17 @@
           </thead>
           <tbody>
             <tr *ngFor="let element of dataSource">
-              <td>{{ element.clientName }}</td>
-              <td>{{ element.email }}</td>
-              <td>{{ element.phone }}</td>
-              <td>{{ element.location }}</td>
-              <td>{{ element.garmentType }}</td>
-              <td>{{ element.quantity }}</td>
-              <td>{{ element.sizes }}</td>
-              <td>{{ element.colors }}</td>
-              <td>{{ element.fabricType }}</td>
-              <td>{{ element.printLocations?.join(', ') }}</td>
-              <td>{{ element.shippingAddress }}</td>
+              <td>{{ element.clientName || '-'}}</td>
+              <td>{{ element.email || '-'}}</td>
+              <td>{{ element.phone || '-'}}</td>
+              <td>{{ element.location || '-'}}</td>
+              <td>{{ element.garmentType || '-'}}</td>
+              <td>{{ element.quantity || '-' }}</td>
+              <td>{{ element.sizes || '-'}}</td>
+              <td>{{ element.colors || '-' }}</td>
+              <td>{{ element.fabricType || '-' }}</td>
+              <td>{{ element.printLocations?.join(', ') || '-'}}</td>
+              <td>{{ element.shippingAddress || '-'}}</td>
               <td>{{ element.estimatedBudget || '-' }}</td>
               <td>
                 <span class="badge" 
@@ -51,10 +51,10 @@
                   {{ element.status }}
                 </span>
               </td>
-              <td>{{ element.enquiryType }}</td>
+              <td>{{ element.surveyCreatedUsing }}</td>
               <td>{{ element.submittedAt | date: 'short' }}</td>
               <td>
-                <button type="button" class="btn btn-primary" (click)="viewDetails(element.id)" >View</button>
+                <button type="button" class="btn btn-primary" (click)="viewDetails(element._id)" >View</button>
               </td>
             </tr>
           </tbody>

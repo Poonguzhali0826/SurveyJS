@@ -29,24 +29,28 @@ export class EnquiryListComponent implements OnInit{
     private router: Router
   ) {}
   ngOnInit(): void {
+    const requiredFields = [
+      'clientName',
+      'email',
+      'phone',
+      'location',
+      'garmentType',
+      'quantity',
+      'sizes',
+      'colors',
+      'fabricType'
+    ];
     this.http.get<any[]>('http://localhost:3000/api/survey').subscribe(data => {
-      console.log('dataaaa', data);
-
-      this.dataSource = data.map((item: any) => {
-        const enquiryTypeRaw = item.data?.surveyCreatedUsing || 'Form';
-        const enquiryType = enquiryTypeRaw.toLowerCase();
-
-        // Check if required fields are filled (example logic)
-        const requiredFields = ['clientName', 'email', 'phone', 'location', 'garmentType', 'quantity', 'sizes', 'colors', 'fabricType'];
-        const isComplete = requiredFields.every(field => !!item.data[field]);
+      const enrichedData = data.map(item => {
+        const isComplete = requiredFields.every(field => !!item[field]);  // Check each field is truthy
         return {
-          ...item.data,
-          status: isComplete ? 'Qualified Lead' : 'Enquiry',
-          enquiryType: enquiryTypeRaw.charAt(0).toUpperCase() + enquiryTypeRaw.slice(1),
-          submittedAt: item.submittedAt,
-          id: item._id
+          ...item,
+          status: isComplete ? 'Qualified Lead' : 'Enquiry'
         };
       });
+    
+      console.log('Enriched data:', enrichedData);
+      this.dataSource = enrichedData;
     });
   }
   startEnquiry() {

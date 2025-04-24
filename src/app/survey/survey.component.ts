@@ -216,7 +216,7 @@ export class SurveyComponent implements OnInit {
     const results = sender.data;
     console.log('survey results:', results);
     const payload = {
-      ...results.data,
+      ...results,
       surveyCreatedUsing: "Form"
     };
     console.log('payload', payload);

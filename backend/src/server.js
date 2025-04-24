@@ -22,8 +22,35 @@ mongoose.connect('mongodb+srv://apoonguzhali26:SmartWork_123@cluster0.8puchx8.mo
   });
 
 const surveySchema = new mongoose.Schema({
-  data: Object,
-  submittedAt: { type: Date, default: Date.now }
+  clientName: String,
+  email: String,
+  phone: Number,
+  location: String,
+  garmentType: String,
+  quantity: String,
+  sizes: String,
+  colors: String,
+  fabricType: String,
+  hasDesign: String,
+  fileFormats: String,
+  printType: String,
+  embroiderySize: String,
+  estimatedBudget: String,
+  specialInstructions:String,
+  followUpTime:String,
+  assignedSalesRep:String,
+  printLocations: [String],
+  eventDeadline: String,
+  requireShipping: String,
+  shippingAddress: String,
+  surveyCreatedUsing: String,
+  incoming_mail:[Object],
+  reply_message: String,
+  missing_fields:[String],
+  submittedAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 const SurveyResponse = mongoose.model('SurveyResponse', surveySchema);
 console.log(
@@ -99,7 +126,7 @@ app.get('/api/createSurvey/:surveyId', async (req, res) => {
 // POST API
 app.post('/api/survey', async (req, res) => {
   try {
-    const newResponse = new SurveyResponse({ data: req.body });
+    const newResponse = new SurveyResponse(req.body);
     await newResponse.save();
     res.status(201).send({ message: 'Survey saved successfully!' });
   } catch (error) {

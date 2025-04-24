@@ -6,56 +6,136 @@
         </span>
         Survey Detail
     </h4>
-    <mat-card class="section-card p-5">
+    <mat-card class="section-card p-2">
         <div class="row mb-3">
             <div class="col-6">
-                <strong>Survey Created Using:</strong> {{ details.data.surveyCreatedUsing || '-' }}
+                <strong>Survey Created Using:</strong> {{ details?.surveyCreatedUsing || '-' }}
             </div>
             <div class="col-6">
-                <strong>Submitted At:</strong> {{ details.submittedAt | date: 'short' }}
+                <strong>Submitted At:</strong> {{ details?.submittedAt | date: 'short' }}
             </div>
         </div>
-        <div *ngIf="details?.data?.surveyCreatedUsing?.toLowerCase() === 'form'" class="details-container">
-    
-            <!-- Client Info -->
-            <mat-card class="section-card p-5">
+        <div  class="row details-container">
+            <div [ngClass]="{ 'col-6': details?.surveyCreatedUsing?.toLowerCase() === 'email', 'col-12': details?.surveyCreatedUsing?.toLowerCase() === 'form' }">
+                <!-- Client Info -->
+                <mat-card class="section-card p-5">
+                    <mat-card-title>Client Info</mat-card-title>
+                    <mat-card-content>
+                        <div class="inner-box">
+                            <p><strong>Name:</strong> {{ details?.clientName }}</p>
+                            <p><strong>Company Name:</strong> {{ details?.companyName || '-' }}</p>
+                            <p><strong>Email:</strong> {{ details?.email }}</p>
+                            <p><strong>Phone:</strong> {{ details?.phone }}</p>
+                            <p><strong>Location:</strong> {{ details?.location }}</p>
+                            <p><strong>Contact Method:</strong> {{ details?.contactMethod || '-' }}</p>
+                        </div>
+                    </mat-card-content>
+            
+                    <mat-card-title class="pt-5">Order Details</mat-card-title>
+                    <mat-card-content>
+                        <div class="inner-box">
+                            <p><strong>Garment Type:</strong> {{ details?.garmentType }}</p>
+                            <p><strong>Quantity:</strong> {{ details?.quantity }}</p>
+                            <p><strong>Sizes:</strong> {{ details?.sizes }}</p>
+                            <p><strong>Colors:</strong> {{ details?.colors }}</p>
+                            <p><strong>Fabric Type:</strong> {{ details?.fabricType }}</p>
+                        </div>
+                    </mat-card-content>
+            
+                    <mat-card-title class="pt-5">Design & Printing Requirements</mat-card-title>
+                    <mat-card-content>
+                        <div class="inner-box">
+                            <p><strong>Has Design:</strong> {{ details?.hasDesign || '-' }}</p>
+                            <p *ngIf="details?.fileFormats"><strong>File Formats:</strong> {{
+                                details?.fileFormats }}</p>
+                            <p *ngIf="details?.needDesignHelp"><strong>Need Design Help:</strong> {{
+                                details?.needDesignHelp}}</p>
+                            <p><strong>Print Type:</strong> {{ details?.printType }}</p>
+                            <p *ngIf="details?.embroiderySize"><strong>Embroidery Size:</strong> {{
+                                details?.embroiderySize}}</p>
+                            <p *ngIf="details?.printLocations"><strong>Print Locations:</strong> {{
+                                details?.printLocations.join(', ') }}</p>
+                            <p *ngIf="details?.designColors"><strong>Design Colors:</strong> {{ details?.designColors }}
+                            </p>
+                        </div>
+                    </mat-card-content>
+            
+                    <mat-card-title class="pt-5">Timeline & Logistics</mat-card-title>
+                    <mat-card-content>
+                        <div class="inner-box">
+                            <p *ngIf="details?.eventDeadline"><strong>Event Deadline:</strong> {{ details?.eventDeadline
+                                }}
+                            </p>
+                            <p><strong>Require Shipping:</strong> {{ details?.requireShipping }}</p>
+                            <p *ngIf="details?.shippingAddress"><strong>Shipping Address:</strong> {{
+                                details?.shippingAddress }}</p>
+                            <p *ngIf="details?.pickupPreference"><strong>Pickup Preference:</strong> {{
+                                details?.pickupPreference }}</p>
+                        </div>
+                    </mat-card-content>
+            
+                    <mat-card-title class="pt-5">Business & Sales</mat-card-title>
+                    <mat-card-content>
+                        <div class="inner-box">
+                            <p><strong>Estimated Budget:</strong> ₹{{ details?.estimatedBudget || 'N/A' }}</p>
+                            <p *ngIf="details?.specialInstructions"><strong>Special Instructions:</strong> {{
+                                details?.specialInstructions }}</p>
+                            <p *ngIf="details?.followUpTime"><strong>Follow Up Time:</strong> {{ details?.followUpTime
+                                }}
+                            </p>
+                            <p *ngIf="details?.assignedSalesRep"><strong>Assigned Sales Rep:</strong> {{
+                                details?.assignedSalesRep }}</p>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div [ngClass]="{ 'col-6': details?.surveyCreatedUsing?.toLowerCase() === 'email'}" *ngIf="details?.surveyCreatedUsing?.toLowerCase() === 'email' && details?.incoming_mail.length !==0" >
+                <mat-card class="section-card p-5">
+                    <strong>Date:</strong> {{ details?.incoming_mail[0]?.date || '-' }}
+                    <strong>From:</strong> {{ details?.incoming_mail[0]?.from || '-' }}
+                    <strong>To:</strong> {{details?.incoming_mail[0]?.to || '-'}}
+                    <strong>Subject:</strong> {{ details?.incoming_mail[0]?.subject || '-' }}
+                    <strong>Message:</strong> {{ details?.incoming_mail[0]?.body || '-' }}
+                </mat-card>
+            </div>
+            <!-- <mat-card class="section-card p-5">
                 <mat-card-title>Client Info</mat-card-title>
                 <mat-card-content>
                     <div class="inner-box">
-                        <p><strong>Name:</strong> {{ details.data.clientName }}</p>
-                        <p><strong>Company Name:</strong> {{ details.data.companyName || '-' }}</p>
-                        <p><strong>Email:</strong> {{ details.data.email }}</p>
-                        <p><strong>Phone:</strong> {{ details.data.phone }}</p>
-                        <p><strong>Location:</strong> {{ details.data.location }}</p>
-                        <p><strong>Contact Method:</strong> {{ details.data.contactMethod || '-' }}</p>
+                        <p><strong>Name:</strong> {{ details?.clientName }}</p>
+                        <p><strong>Company Name:</strong> {{ details?.companyName || '-' }}</p>
+                        <p><strong>Email:</strong> {{ details?.email }}</p>
+                        <p><strong>Phone:</strong> {{ details?.phone }}</p>
+                        <p><strong>Location:</strong> {{ details?.location }}</p>
+                        <p><strong>Contact Method:</strong> {{ details?.contactMethod || '-' }}</p>
                     </div>
                 </mat-card-content>
     
                 <mat-card-title class="pt-5">Order Details</mat-card-title>
                 <mat-card-content>
                     <div class="inner-box">
-                        <p><strong>Garment Type:</strong> {{ details.data.garmentType }}</p>
-                        <p><strong>Quantity:</strong> {{ details.data.quantity }}</p>
-                        <p><strong>Sizes:</strong> {{ details.data.sizes }}</p>
-                        <p><strong>Colors:</strong> {{ details.data.colors }}</p>
-                        <p><strong>Fabric Type:</strong> {{ details.data.fabricType }}</p>
+                        <p><strong>Garment Type:</strong> {{ details?.garmentType }}</p>
+                        <p><strong>Quantity:</strong> {{ details?.quantity }}</p>
+                        <p><strong>Sizes:</strong> {{ details?.sizes }}</p>
+                        <p><strong>Colors:</strong> {{ details?.colors }}</p>
+                        <p><strong>Fabric Type:</strong> {{ details?.fabricType }}</p>
                     </div>
                 </mat-card-content>
     
                 <mat-card-title class="pt-5">Design & Printing Requirements</mat-card-title>
                 <mat-card-content>
                     <div class="inner-box">
-                        <p><strong>Has Design:</strong> {{ details.data.hasDesign || '-' }}</p>
-                        <p *ngIf="details.data.fileFormats"><strong>File Formats:</strong> {{
-                            details.data.fileFormats.join(',') }}</p>
-                        <p *ngIf="details.data.needDesignHelp"><strong>Need Design Help:</strong> {{
-                            details.data.needDesignHelp}}</p>
-                        <p><strong>Print Type:</strong> {{ details.data.printType }}</p>
-                        <p *ngIf="details.data.embroiderySize"><strong>Embroidery Size:</strong> {{
-                            details.data.embroiderySize}}</p>
-                        <p *ngIf="details.data.printLocations"><strong>Print Locations:</strong> {{
-                            details.data.printLocations.join(', ') }}</p>
-                        <p *ngIf="details.data.designColors"><strong>Design Colors:</strong> {{ details.data.designColors }}
+                        <p><strong>Has Design:</strong> {{ details?.hasDesign || '-' }}</p>
+                        <p *ngIf="details?.fileFormats"><strong>File Formats:</strong> {{
+                            details?.fileFormats }}</p>
+                        <p *ngIf="details?.needDesignHelp"><strong>Need Design Help:</strong> {{
+                            details?.needDesignHelp}}</p>
+                        <p><strong>Print Type:</strong> {{ details?.printType }}</p>
+                        <p *ngIf="details?.embroiderySize"><strong>Embroidery Size:</strong> {{
+                            details?.embroiderySize}}</p>
+                        <p *ngIf="details?.printLocations"><strong>Print Locations:</strong> {{
+                            details?.printLocations.join(', ') }}</p>
+                        <p *ngIf="details?.designColors"><strong>Design Colors:</strong> {{ details?.designColors }}
                         </p>
                     </div>
                 </mat-card-content>
@@ -63,47 +143,116 @@
                 <mat-card-title class="pt-5">Timeline & Logistics</mat-card-title>
                 <mat-card-content>
                     <div class="inner-box">
-                        <p *ngIf="details.data.eventDeadline"><strong>Event Deadline:</strong> {{ details.data.eventDeadline
+                        <p *ngIf="details?.eventDeadline"><strong>Event Deadline:</strong> {{ details?.eventDeadline
                             }}
                         </p>
-                        <p><strong>Require Shipping:</strong> {{ details.data.requireShipping }}</p>
-                        <p *ngIf="details.data.shippingAddress"><strong>Shipping Address:</strong> {{
-                            details.data.shippingAddress }}</p>
-                        <p *ngIf="details.data.pickupPreference"><strong>Pickup Preference:</strong> {{
-                            details.data.pickupPreference }}</p>
+                        <p><strong>Require Shipping:</strong> {{ details?.requireShipping }}</p>
+                        <p *ngIf="details?.shippingAddress"><strong>Shipping Address:</strong> {{
+                            details?.shippingAddress }}</p>
+                        <p *ngIf="details?.pickupPreference"><strong>Pickup Preference:</strong> {{
+                            details?.pickupPreference }}</p>
                     </div>
                 </mat-card-content>
     
                 <mat-card-title class="pt-5">Business & Sales</mat-card-title>
                 <mat-card-content>
                     <div class="inner-box">
-                        <p><strong>Estimated Budget:</strong> ₹{{ details.data.estimatedBudget || 'N/A' }}</p>
-                        <p *ngIf="details.data.specialInstructions"><strong>Special Instructions:</strong> {{
-                            details.data.specialInstructions }}</p>
-                        <p *ngIf="details.data.followUpTime"><strong>Follow Up Time:</strong> {{ details.data.followUpTime
+                        <p><strong>Estimated Budget:</strong> ₹{{ details?.estimatedBudget || 'N/A' }}</p>
+                        <p *ngIf="details?.specialInstructions"><strong>Special Instructions:</strong> {{
+                            details?.specialInstructions }}</p>
+                        <p *ngIf="details?.followUpTime"><strong>Follow Up Time:</strong> {{ details?.followUpTime
                             }}
                         </p>
-                        <p *ngIf="details.data.assignedSalesRep"><strong>Assigned Sales Rep:</strong> {{
-                            details.data.assignedSalesRep }}</p>
+                        <p *ngIf="details?.assignedSalesRep"><strong>Assigned Sales Rep:</strong> {{
+                            details?.assignedSalesRep }}</p>
                     </div>
                 </mat-card-content>
-            </mat-card>
+            </mat-card> -->
     
         </div>
-        <div *ngIf="details?.data?.surveyCreatedUsing?.toLowerCase() === 'email'" class="container">
+        <!-- <div *ngIf="details?.surveyCreatedUsing?.toLowerCase() === 'email'" class="details-container">
     
             <h4>Email-Based Enquiry Details</h4>
     
             <div class="row mb-3">
                 <div class="col-6">
-                    <strong>Name:</strong> {{ details.data.clientName || '-' }}
+                    <mat-card class="section-card p-5">
+                        <mat-card-title>Client Info</mat-card-title>
+                        <mat-card-content>
+                            <div class="inner-box">
+                                <p><strong>Name:</strong> {{ details?.clientName }}</p>
+                                <p><strong>Company Name:</strong> {{ details?.companyName || '-' }}</p>
+                                <p><strong>Email:</strong> {{ details?.email }}</p>
+                                <p><strong>Phone:</strong> {{ details?.phone }}</p>
+                                <p><strong>Location:</strong> {{ details?.location }}</p>
+                                <p><strong>Contact Method:</strong> {{ details?.contactMethod || '-' }}</p>
+                            </div>
+                        </mat-card-content>
+                
+                        <mat-card-title class="pt-5">Order Details</mat-card-title>
+                        <mat-card-content>
+                            <div class="inner-box">
+                                <p><strong>Garment Type:</strong> {{ details?.garmentType }}</p>
+                                <p><strong>Quantity:</strong> {{ details?.quantity }}</p>
+                                <p><strong>Sizes:</strong> {{ details?.sizes }}</p>
+                                <p><strong>Colors:</strong> {{ details?.colors }}</p>
+                                <p><strong>Fabric Type:</strong> {{ details?.fabricType }}</p>
+                            </div>
+                        </mat-card-content>
+                
+                        <mat-card-title class="pt-5">Design & Printing Requirements</mat-card-title>
+                        <mat-card-content>
+                            <div class="inner-box">
+                                <p><strong>Has Design:</strong> {{ details?.hasDesign || '-' }}</p>
+                                <p *ngIf="details?.fileFormats"><strong>File Formats:</strong> {{
+                                    details?.fileFormats }}</p>
+                                <p *ngIf="details?.needDesignHelp"><strong>Need Design Help:</strong> {{
+                                    details?.needDesignHelp}}</p>
+                                <p><strong>Print Type:</strong> {{ details?.printType }}</p>
+                                <p *ngIf="details?.embroiderySize"><strong>Embroidery Size:</strong> {{
+                                    details?.embroiderySize}}</p>
+                                <p *ngIf="details?.printLocations"><strong>Print Locations:</strong> {{
+                                    details?.printLocations.join(', ') }}</p>
+                                <p *ngIf="details?.designColors"><strong>Design Colors:</strong> {{ details?.designColors }}
+                                </p>
+                            </div>
+                        </mat-card-content>
+                
+                        <mat-card-title class="pt-5">Timeline & Logistics</mat-card-title>
+                        <mat-card-content>
+                            <div class="inner-box">
+                                <p *ngIf="details?.eventDeadline"><strong>Event Deadline:</strong> {{ details?.eventDeadline
+                                    }}
+                                </p>
+                                <p><strong>Require Shipping:</strong> {{ details?.requireShipping }}</p>
+                                <p *ngIf="details?.shippingAddress"><strong>Shipping Address:</strong> {{
+                                    details?.shippingAddress }}</p>
+                                <p *ngIf="details?.pickupPreference"><strong>Pickup Preference:</strong> {{
+                                    details?.pickupPreference }}</p>
+                            </div>
+                        </mat-card-content>
+                
+                        <mat-card-title class="pt-5">Business & Sales</mat-card-title>
+                        <mat-card-content>
+                            <div class="inner-box">
+                                <p><strong>Estimated Budget:</strong> ₹{{ details?.estimatedBudget || 'N/A' }}</p>
+                                <p *ngIf="details?.specialInstructions"><strong>Special Instructions:</strong> {{
+                                    details?.specialInstructions }}</p>
+                                <p *ngIf="details?.followUpTime"><strong>Follow Up Time:</strong> {{ details?.followUpTime
+                                    }}
+                                </p>
+                                <p *ngIf="details?.assignedSalesRep"><strong>Assigned Sales Rep:</strong> {{
+                                    details?.assignedSalesRep }}</p>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
-                <div class="col-6">
-                    <strong>Email:</strong> {{ details.data.email || '-' }}
+                <div class="col-6" *ngIf="details?.surveyCreatedUsing?.toLowerCase() === 'email'" >
+                    <strong>Email:</strong> {{ details?.email || '-' }}
                 </div>
             </div>
     
-        </div>
+        </div> -->
     </mat-card>
 </div>
 <div *ngIf="!details">
