@@ -214,9 +214,11 @@ export class SurveyComponent implements OnInit {
     const results = sender.data;
     console.log('survey results:', results);
     const payload = {
-      ...results,
+      ...results.data,
       surveyCreatedUsing: "Form"
     };
+    console.log('payload', payload);
+
     this.http.post('http://localhost:3000/api/survey', payload).subscribe({
       next: (response) => {
         console.log("Data sent to backend:", response);
