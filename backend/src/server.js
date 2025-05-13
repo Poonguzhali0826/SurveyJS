@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth.routes');
+const { authenticate, authorizeRole } = require('./middleware/auth.middleware');
 const app = express();
 
 // Middleware
@@ -161,6 +162,18 @@ app.get('/api/survey/:id', async (req, res) => {
     res.status(500).send('Error fetching survey data');
   }
 });
+
+app.get('/api/admin-dashboard', authenticate, authorizeRole('admin'), (req, res) => {
+  res.json({ message: 'Welcome, admin!', user: req.user });
+});
+
+// Example route: Customer only
+app.get('/api/customer-dashboard', authenticate, authorizeRole('customer'), (req, res) => {
+  res.json({ message: 'Welcome, customer!', user: req.user });
+});
+
+
+
 
 // Start server
 const PORT = 3000;
