@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
+const authRoutes = require('./routes/auth.routes');
 const app = express();
 
 // Middleware
@@ -12,6 +12,7 @@ mongoose.connection.once('open', async () => {
   const collections = await mongoose.connection.db.listCollections().toArray();
   console.log("📂 Collections in DB:", collections.map(c => c.name));
 });
+app.use('/api/auth', authRoutes);
 // MongoDB connection
 mongoose.connect('mongodb+srv://apoonguzhali26:SmartWork_123@cluster0.8puchx8.mongodb.net/Embroider_Survey', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
