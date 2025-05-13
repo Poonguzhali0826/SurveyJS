@@ -1,0 +1,58 @@
+<div class="container-fluid login-wrapper">
+  <div class="row min-vh-100 align-items-center" style="background-color: #F1F6FF;">
+    <div class="col-md-7 d-none d-md-flex justify-content-center align-items-center">
+      <img src="/test.png" alt="Illustration" class="img-fluid w-75" />
+    </div>
+
+    <div class="col-12 col-md-5 right-panel">
+  <div class="login-container mx-auto">
+    <h2 class="fw-bold mb-2">Welcome back !</h2>
+    <p class="text-muted mb-4">Please enter your details</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3 text-start">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control border-0 border-bottom"
+          formControlName="email"
+        />
+      </div>
+
+      <div class="mb-3 text-start">
+        <label for="password" class="form-label">Password</label>
+        <input
+          [type]="hide ? 'password' : 'text'"
+          id="password"
+          class="form-control border-0 border-bottom"
+          formControlName="password"
+        />
+        <small class="toggle-password" (click)="hide = !hide">{{ hide ? 'Show' : 'Hide' }}</small>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <input type="checkbox" formControlName="rememberMe" />
+          <label class="ms-1">Remember for 30 days</label>
+        </div>
+        <a href="#" class="text-decoration-none">Forget password</a>
+      </div>
+
+      <button class="btn btn-primary w-100 py-2 mb-3" type="submit">Log in</button>
+
+      <button type="button" class="btn btn-outline-secondary no-hover w-100 py-2 d-flex align-items-center justify-content-center">
+        <img src="/google.png" alt="Google" style="height: 20px; margin-right: 10px;" />
+        Log in with google
+      </button>
+
+      <p class="text-center mt-4">
+        Don’t have an account? <a routerLink="/signup" class="fw-semibold text-decoration-none" style="cursor: pointer;">
+          Sign up
+        </a>
+      </p>
+    </form>
+  </div>
+</div>
+  </div>
+</div>

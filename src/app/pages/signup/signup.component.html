@@ -1,0 +1,65 @@
+<div class="container-fluid login-wrapper">
+  <div class="row min-vh-100 align-items-center" style="background-color: #F1F6FF;">
+    <div class="col-md-7 d-none d-md-flex justify-content-center align-items-center">
+      <img src="/test.png" alt="Illustration" class="img-fluid w-75" />
+    </div>
+
+    <div class="col-12 col-md-5 right-panel">
+      <div class="login-container mx-auto">
+        <h2 class="fw-bold mb-2 text-center">Create an account</h2>
+        <p class="text-start text-muted mb-4">
+          Already have an account?
+          <a routerLink="/login" class="fw-semibold text-decoration-none" style="cursor: pointer;">Log in</a>
+        </p>
+
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3 text-start">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" class="form-control border-0 border-bottom" formControlName="name"
+               />
+          </div>
+
+          <div class="mb-3 text-start">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" class="form-control border-0 border-bottom" formControlName="email"
+               />
+          </div>
+
+          <div class="mb-3 text-start">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" class="form-control border-0 border-bottom" formControlName="password"
+               />
+          </div>
+
+          <div class="mb-3 text-start">
+            <label for="confirmPassword" class="form-label">Re Enter Password</label>
+            <input type="password" id="confirmPassword" class="form-control border-0 border-bottom"
+              formControlName="confirmPassword" />
+          </div>
+
+          <div class="mb-4 text-start">
+            <input type="checkbox" formControlName="agree" />
+            <label class="ms-1">
+              I agree to the <strong>Term & Conditions</strong>
+            </label>
+          </div>
+
+          <button class="btn btn-primary w-100 py-2 mb-3" type="submit">Create an account</button>
+
+         <div class="divider my-3 d-flex align-items-center">
+  <hr class="flex-grow-1" />
+  <span class="mx-2 text-muted small">Or Register with</span>
+  <hr class="flex-grow-1" />
+</div>
+
+          <button type="button"
+            class="btn btn-outline-secondary no-hover w-100 py-2 d-flex align-items-center justify-content-center">
+            <img src="/google.png" alt="Google" style="height: 20px; margin-right: 10px;" />
+            Log in with google
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

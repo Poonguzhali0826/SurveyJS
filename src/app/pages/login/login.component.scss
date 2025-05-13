@@ -1,0 +1,49 @@
+
+.left-panel {
+  background-color: #F1F6FF;
+}
+
+.right-panel {
+  background-color: white;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align form to top portion */
+  padding: 0 2rem;
+}
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 60px; /* Push form content down a bit */
+}
+
+.login-container h2,
+.login-container p {
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: #5DBAFF;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+}
+
+.btn-outline-secondary {
+  border: none;
+  font-weight: 500;
+}
+
+.toggle-password {
+  cursor: pointer;
+  font-size: 13px;
+  margin-top: 5px;
+  display: inline-block;
+  color: #333;
+}
+.no-hover:hover {
+  color: inherit !important;
+  background-color: inherit !important;
+  border-color: inherit !important;
+  cursor: pointer;
+}
